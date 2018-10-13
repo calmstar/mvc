@@ -1,0 +1,37 @@
+<?php
+/**
+ * 框架配置目录
+ */
+return array(
+    // 验证码
+    'CODE_LEN' => 4,
+
+    // 默认时区
+    'DEFAULT_TIME_ZONE' => 'PRC',
+
+    // 是否开启session
+    'SESSION_AUTO_START' => TRUE,
+
+    // 是否开启错误提示
+    'DISPLAY_ERRORS' => 1,
+
+    // 若开启错误提示，提示哪些级别的
+    // E_NOTICE只显示提示；E_NOTICE | E_WARNING 显示notice和warning；E_ERROR
+    // 产品阶段 E_ALL & ~E_DEPRECATED 显示所有错误除了弃用的
+    // 开发阶段 E_ALL | E_STRICT 显示所有错误
+    'ERROR_REPORTING' => E_ALL | E_STRICT,
+
+    // 是否开启错误日志记录，上线时为1，开发为0
+    'LOG_ERRORS' => 0,
+
+    // 错误日志记录路径
+    'ERROR_LOG_PATH' => APP_LOG_PATH,
+
+    // 获取url控制器的键名称
+    'VAR_CONTROLLER' => 'c',
+
+    // 获取url动作的键名称
+    'VAR_ACTION' => 'a',
+
+
+);
