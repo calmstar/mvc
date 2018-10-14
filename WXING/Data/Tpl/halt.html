@@ -1,0 +1,30 @@
+<html>
+<head></head>
+<body>
+
+    <div class="msg">
+        错误信息：<br>
+        <?php echo $e['message']  ?>
+    </div>
+    <br>
+
+    <?php if(DEBUG && isset($e['file'])): ?>
+    <div>
+        错误位置：<br>
+            file: <?php echo $e['file'] . 'Line: ' . $e['line'] ?>
+    </div>
+    <?php endif ?>
+    <br>
+
+    <?php if(isset($e['trace'])): ?>
+    <div>
+        路径：<br>
+        <?php echo nl2br($e['trace']) ?>
+    </div>
+    <?php endif ?>
+    <br>
+
+    <div>copyright WXING 框架，version<?php echo WXING_VERSION ?></div>
+
+</body>
+</html>

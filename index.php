@@ -7,5 +7,8 @@
  *
  * 项目 单入口文件
  */
+
+
+define('DEBUG',TRUE);
 define('APP_NAME','Home');
 require './WXING/WXING.php';
