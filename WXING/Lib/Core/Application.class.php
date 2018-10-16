@@ -6,14 +6,30 @@
 final class Application {
     public static function run() {
         self::_init();
+        // 错误处理，此前面调用的都是框架代码，后面开始是用户写的代码，可能出错，所以在这里引入
+        set_error_handler(array(__CLASS__,'error'));
+        self::_user_import();
         self::_set_url();
         spl_autoload_register(array(__CLASS__,'_autoload'));// __CLASS__系统魔术常量代表当前类Application
         self::_create_demo();
         self::_app_run();
     }
 
+    public static function error($errno, $error, $file, $line) {
+        switch ($errno) {
+            case E_STRICT:
+            case E_USER_WARNING:
+            case E_USER_NOTICE:
+            default:
+                if(DEBUG) {
+                    include DATA_PATH . '/Tpl/notice.html';
+                }
+                break;
+        }
+    }
+
     /**
-     * 实例化应用控制器
+     * 实例化应用控制器，控制器接受请求，分发找控制器文件中心
      */
     private static function _app_run() {
         $c = isset($_GET[C('VAR_CONTROLLER')]) ? $_GET[C('VAR_CONTROLLER')] : 'Index';
@@ -21,8 +37,28 @@ final class Application {
         define('CONTROLLER', $c);
         define('ACTION', $a);
         $c .= 'Controller';
-        $obj = new $c;
-        $obj->$a();
+        // 判断类 $c 是否存在，class_exists判断时会通过自动加载后再判断
+        if( class_exists($c) ) {
+            // 访问的控制器存在
+            $obj = new $c;
+            if(!method_exists($obj, $a)) {
+                // 访问的动作存在
+                if(method_exists($obj, '__empty')) {
+                    // 空方法存在就调用
+                    $obj->__empty();
+                }else {
+                    // 空方法不存在，报出错误
+                    halt($c . '控制器中的' . $a . ' 动作未找到');
+                }
+            }else {
+                // 访问的动作不存在
+                $obj->$a();
+            }
+        }else {
+            // 访问的控制器不存在时，实例化空控制器，_autoload中已实现自动加载
+            $obj = new EmptyController();
+            $obj->index();
+        }
     }
 
     /**
@@ -56,8 +92,34 @@ str;
      * 自动载入功能，载入应用目录中的控制器文件
      */
     private static function _autoload($className) {
-        require APP_CONTROLLER_PATH.'/'.$className.'.class.php';
+        switch (true) {
+            case  strlen($className) > 10 && substr($className, -10) == 'Controller' :  // 从后面取十个字符
+                $path = APP_CONTROLLER_PATH.'/'.$className.'.class.php';
+                // 空控制器的操作
+                if( !is_file($path) ) {
+                    // 不存在访问的控制器文件
+                    $emptyPath = APP_CONTROLLER_PATH . '/EmptyController.class.php';
+                    if(is_file($emptyPath)) {
+                        // 用户定义了空控制器
+                        include $emptyPath;
+                        return;
+                    }else {
+                        // 用户没有定义了空控制器
+                        halt($path . '控制器文件未找到');
+                    }
+                }
+                // 存在访问的控制器文件
+                require $path;
+                break;
+            default :
+                // 框架中的Tool的类文件
+                $path = TOOL_PATH.'/'.$className.'.class.php';
+                if(!is_file($path)) halt($path . '类文件未找到');
+                require $path;
+                break;
+        }
     }
+
     /*
      * 定义http的url变量
      */
@@ -73,7 +135,19 @@ str;
     }
 
     /**
-     * 初始化框架
+     * 加载公共文件夹 Common/Lib 下指定的文件（在任意的config.php的AUTO_LOAD_FILE指定）
+     */
+    private static function _user_import() {
+        $file_arr = C('AUTO_LOAD_FILE');
+        if(is_array($file_arr) && !empty($file_arr)) {
+            foreach ($file_arr as $v) {
+                require_once COMMON_LIB_PATH . '/' . $v;
+            }
+        }
+    }
+
+    /**
+     * 初始化框架，加载配置文件
      */
     private static function _init() {
         // 优先级：按如下顺序 系统配置<公共配置<用户配置
@@ -124,7 +198,7 @@ str;
             // 错误日志记录到哪里
             ini_set('error_log',C('ERROR_LOG_PATH').'/'.date('Y-m-d').'.log');
         }
-
     }
+
 }
 ?>

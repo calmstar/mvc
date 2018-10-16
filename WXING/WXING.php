@@ -30,6 +30,7 @@ final class WXING {
      */
     private static function _set_const() {
         // var_dump(__FILE__)当前位置 /mnt/hgfs/vmshare_cent68/mvc.local.com/MVC/WXING/WXING.php
+        // WXING_PATH /mnt/hgfs/vmshare_cent68/mvc.local.com/MVC/WXING
         // windows 分隔符换成linux
         $path = str_replace('\\','/',__FILE__);
         define('WXING_PATH', dirname($path)); // 框架目录，最后不带斜杠
@@ -38,6 +39,10 @@ final class WXING {
         define('LIB_PATH', WXING_PATH.'/Lib');
         define('CORE_PATH', LIB_PATH.'/Core');
         define('FUNCTION_PATH', LIB_PATH.'/Function');
+
+        define('EXTENDS_PATH', WXING_PATH . '/Extends');
+        define('ORG_PATH', EXTENDS_PATH . '/Org');
+        define('TOOL_PATH', EXTENDS_PATH . '/Tool');
 
         define('ROOT_PATH', dirname(WXING_PATH)); //项目根目录
 

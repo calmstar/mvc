@@ -3,6 +3,9 @@
  * 框架配置目录
  */
 return array(
+    // 自动加载 Common/Lib目录下的文件
+    'AUTO_LOAD_FILE' => array(),
+
     // 验证码
     'CODE_LEN' => 4,
 

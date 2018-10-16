@@ -1,0 +1,29 @@
+<html>
+<head>
+    <script>
+        window.setTimeout("<?php echo $url ?>", <?php echo $time ?>*1000 );
+    </script>
+</head>
+<body>
+<div style="width: 800px;margin: 0 auto;text-align: center">
+    <h1 style="color: blue">操作成功：<?php echo $msg ?></h1>
+    <p>
+        <span id="_time"><?php echo $time ?></span>秒后进行跳转
+        <a href="javascript:<?php echo $url ?>">跳转</a>
+        &nbsp;或&nbsp;
+        <a href="<?php echo __ROOT__ ?>">返回首页</a>
+    </p>
+
+</div>
+<script>
+    var  time = document.getElementById("_time").innerHTML;
+    function revTime() {
+        time--;
+        if(time > 0){
+            document.getElementById("_time").innerHTML = time;
+        }
+    }
+    setInterval("revTime()",1000);
+</script>
+</body>
+</html>
