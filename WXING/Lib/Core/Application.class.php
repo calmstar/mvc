@@ -7,7 +7,8 @@ final class Application {
     public static function run() {
         self::_init();
         // 错误处理，此前面调用的都是框架代码，后面开始是用户写的代码，可能出错，所以在这里引入
-        set_error_handler(array(__CLASS__,'error'));
+        set_error_handler(array(__CLASS__,'error')); //设置错误处理函数为当前类的error方法
+        register_shutdown_function(array(__CLASS__, 'fatal_error')); //注册的fatal_error函数，程序执行完（即_app_run）也会调用它
         self::_user_import();
         self::_set_url();
         spl_autoload_register(array(__CLASS__,'_autoload'));// __CLASS__系统魔术常量代表当前类Application
@@ -15,8 +16,34 @@ final class Application {
         self::_app_run();
     }
 
+    /**
+     *  注册一个会在php中止时执行的函数
+     *  它会在脚本执行完成或者 exit() 后被调用。
+     */
+    public static function fatal_error() {
+        if($e = error_get_last()) { //没有错误就为false
+            self::error($e['type'], $e['message'], $e['file'], $e['line']);
+        }
+    }
+
+    /**
+     * 设置用户自定义的错误处理函数
+     * @param $errno
+     * @param $error
+     * @param $file
+     * @param $line
+     */
     public static function error($errno, $error, $file, $line) {
         switch ($errno) {
+            case E_ERROR:
+            case E_PARSE:
+            case E_CORE_ERROR:
+            case E_COMPILE_ERROR:
+            case E_USER_ERROR:
+                $msg = $error . $file . "第 {$line} 行 ";
+                halt($msg);
+                break;
+
             case E_STRICT:
             case E_USER_WARNING:
             case E_USER_NOTICE:
@@ -94,6 +121,7 @@ str;
     private static function _autoload($className) {
         switch (true) {
             case  strlen($className) > 10 && substr($className, -10) == 'Controller' :  // 从后面取十个字符
+                // 载入控制器文件
                 $path = APP_CONTROLLER_PATH.'/'.$className.'.class.php';
                 // 空控制器的操作
                 if( !is_file($path) ) {
@@ -111,6 +139,14 @@ str;
                 // 存在访问的控制器文件
                 require $path;
                 break;
+
+            case strlen($className) > 5 && substr($className, -5) == 'Model' :
+                // 载入Model文件
+                $path = COMMON_MODEL_PATH . '/' . $className . '.class.php';
+                if(!is_file($path)) halt($path . '类文件未找到');
+                require $path;
+                break;
+
             default :
                 // 框架中的Tool的类文件
                 $path = TOOL_PATH.'/'.$className.'.class.php';

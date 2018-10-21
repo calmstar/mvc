@@ -14,8 +14,30 @@ class IndexController extends Controller {
     }
 
     public function index() {
-        $code = new Code();
-        $code->run();
-        include 'sss.html';
+//        $m = new Model('user');
+//        $sql = "select * from jt_user limit 1";
+//        p($m->query($sql));
+//        p(M('user')->field('name,email')->order('id desc')->limit(1)->all());
+//        p(M('user')->all());
+//        p(M('user')->exe("INSERT INTO `jt_user` VALUES ('2', '494025451222@qq.com', '$2y$10$/tsKYctqQKNZt8B9RfvanulZtp02zcoppQiRxCGDjJOV5LejbmAle', '陈文11', '1501586745', 0, '17875511965', '', 1, '192.168.79.41', '1526553918')") );
+//        p(M('user')->where('id=34')->delete());
+//        if(IS_POST) {
+//            unset($_POST['submit']);
+//            $_POST['rgdate'] = 20000000;
+//            $_POST['role_id'] = 2;
+//
+////            $id = M('user')->add();
+////            $this->success($id. ' 添加成功');
+//            $res = M('user')->where('id=35')->update();
+//            $this->success($res. ' 成功');
+//        }
+//        $this->display();
+
+//        $user = new UserModel();
+//        p($user->getAllData());
+
+        p( K('User')->getAllData() );
+
     }
+
 }

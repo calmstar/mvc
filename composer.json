@@ -1,0 +1,11 @@
+{
+    "name": "root/mvc",
+    "description": "WX MVC FrameWork",
+    "authors": [
+        {
+            "name": "calmstar",
+            "email": "494025451@qq.com"
+        }
+    ],
+    "require": {}
+}

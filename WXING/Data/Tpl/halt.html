@@ -3,14 +3,14 @@
 <body>
 
     <div class="msg">
-        错误信息：<br>
+        <b>错误信息 </b>：<br>
         <?php echo $e['message']  ?>
     </div>
     <br>
 
     <?php if(DEBUG && isset($e['file'])): ?>
     <div>
-        错误位置：<br>
+        <b>错误位置</b>：<br>
             file: <?php echo $e['file'] . 'Line: ' . $e['line'] ?>
     </div>
     <?php endif ?>
@@ -18,7 +18,7 @@
 
     <?php if(isset($e['trace'])): ?>
     <div>
-        路径：<br>
+        <b>路径</b>：<br>
         <?php echo nl2br($e['trace']) ?>
     </div>
     <?php endif ?>

@@ -119,4 +119,16 @@ function print_const() {
     p($const['user']);
 }
 
+// 父model实例化：Model.class.php
+function M($table) {
+    return new Model($table);
+}
+
+// 子model实例化（扩展模型），$nameModel.class.php
+// 如 K('User')，代表实例化 UserModel.class.php
+function K($model) {
+    $model .= 'Model';
+    return new $model;  //前面已经实现自动加载，此处直接new类名即可
+}
+
 ?>

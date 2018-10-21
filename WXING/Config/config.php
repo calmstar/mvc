@@ -38,4 +38,26 @@ return array(
     // 错误跳转地址
     'ERROR_URL' => '',
     'ERROR_MSG' => '出错，请稍后再试',
+
+    // 数据库配置
+    'DB_CHARSET' => 'utf8',
+    'DB_HOST' => '127.0.0.1',
+    'DB_PORT' => '3306',
+    'DB_USER' => 'root',
+    'DB_PASSWORD' => '123456',
+    'DB_DATABASE' => 'jmooctest',
+    'DB_PREFIX' => 'jt_',
+
+
+
+
+
+
+
+
+
+
+
+
+
 );
