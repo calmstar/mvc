@@ -36,7 +36,10 @@ class IndexController extends Controller {
 //        $user = new UserModel();
 //        p($user->getAllData());
 
-        p( K('User')->getAllData() );
+//        p( K('User')->getAllData() );
+
+        $this->assign('var', 'fdfdfd');
+        $this->display();
 
     }
 

@@ -57,6 +57,10 @@ final class WXING {
         define('APP_TPL_PATH', APP_PATH.'/Tpl');
         define('APP_PUBLIC_PATH', APP_TPL_PATH.'/Public');
 
+        // smarty临时目录
+        define('APP_COMPILE_PATH', TEMP_PATH.'/Compile');
+        define('APP_CACHE_PATH', TEMP_PATH.'/Cache');
+
         // 应用公共目录
         define('COMMON_PATH', ROOT_PATH. '/Common');
         define('COMMON_CONFIG_PATH', COMMON_PATH. '/Config');
@@ -86,9 +90,11 @@ final class WXING {
             COMMON_CONFIG_PATH,
             COMMON_MODEL_PATH,
             COMMON_LIB_PATH,
+            APP_COMPILE_PATH,
+            APP_CACHE_PATH,
         );
         foreach ($arr as $v){
-            is_dir($v) || mkdir($v,0777,true);
+            is_dir($v) || mkdir($v,0777,true); //不存在这个文件才去创建，避免覆盖
         }
 
         is_file(APP_TPL_PATH.'/success.html') || copy(DATA_PATH.'/Tpl/success.html',APP_TPL_PATH.'/success.html');
@@ -98,13 +104,16 @@ final class WXING {
 
     /**
      * 载入框架必须载入的文件,载入的文件，整个项目可以调用
+     * 与后面自动加载的系统文件不同
      */
     private static function _import_file() {
         $file_arr = array(
             FUNCTION_PATH.'/function.php',
+            ORG_PATH . '/Smarty/Smarty.class.php',
+            CORE_PATH . '/SmartyView.class.php', // 因为Controller要继承SmartyView，所以必须放在Controller前面
             CORE_PATH.'/Controller.class.php',
-            CORE_PATH.'/Application.class.php',
             CORE_PATH.'/Log.class.php',
+            CORE_PATH.'/Application.class.php',
         );
         $str = '';
         foreach ($file_arr as $v) {

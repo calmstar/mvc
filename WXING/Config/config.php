@@ -48,16 +48,11 @@ return array(
     'DB_DATABASE' => 'jmooctest',
     'DB_PREFIX' => 'jt_',
 
-
-
-
-
-
-
-
-
-
-
-
+    // smarty
+    'SMARTY_ON' => true,
+    'LEFT_DELIMITER' => '{@',
+    'RIGHT_DELIMITER' => '}',
+    'CACHE_ON' => false,
+    'CACHE_TIME' => 60,
 
 );
