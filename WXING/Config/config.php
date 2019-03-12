@@ -43,9 +43,9 @@ return array(
     'DB_CHARSET' => 'utf8',
     'DB_HOST' => '127.0.0.1',
     'DB_PORT' => '3306',
-    'DB_USER' => 'root',
-    'DB_PASSWORD' => '123456',
-    'DB_DATABASE' => 'jmooctest',
+    'DB_USER' => 'jt_vag_com',
+    'DB_PASSWORD' => 'RGDLrbzrFsCT5Hcy',
+    'DB_DATABASE' => 'jt_vag_com',
     'DB_PREFIX' => 'jt_',
 
     // smarty
