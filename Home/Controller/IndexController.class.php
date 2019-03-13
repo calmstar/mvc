@@ -14,9 +14,10 @@ class IndexController extends Controller {
     }
 
     public function index() {
-//        $m = new Model('user');
-//        $sql = "select * from jt_user limit 1";
-//        p($m->query($sql));
+        $m = new Model('user');
+        $sql = "select * from user limit 1";
+        p($m->query($sql));
+        
 //        p(M('user')->field('name,email')->order('id desc')->limit(1)->all());
 //        p(M('user')->all());
 //        p(M('user')->exe("INSERT INTO `jt_user` VALUES ('2', '494025451222@qq.com', '$2y$10$/tsKYctqQKNZt8B9RfvanulZtp02zcoppQiRxCGDjJOV5LejbmAle', '陈文11', '1501586745', 0, '17875511965', '', 1, '192.168.79.41', '1526553918')") );
@@ -39,10 +40,10 @@ class IndexController extends Controller {
 //        p( K('User')->getAllData() );
 
         // 模板缓存失效，才进行重新分配
-        if (!$this->isCached() ) {
-            $this->assign('var', time());
-        }
-        $this->display();
+//        if (!$this->isCached() ) {
+//            $this->assign('var', time());
+//        }
+//        $this->display();
 
     }
 

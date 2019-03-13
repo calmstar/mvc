@@ -43,10 +43,10 @@ return array(
     'DB_CHARSET' => 'utf8',
     'DB_HOST' => '127.0.0.1',
     'DB_PORT' => '3306',
-    'DB_USER' => 'jt_vag_com',
-    'DB_PASSWORD' => 'RGDLrbzrFsCT5Hcy',
-    'DB_DATABASE' => 'jt_vag_com',
-    'DB_PREFIX' => 'jt_',
+    'DB_USER' => 'mvc_vag_com',
+    'DB_PASSWORD' => 'WdapkmGziw6EYFC7',
+    'DB_DATABASE' => 'mvc_vag_com',
+    'DB_PREFIX' => '',
 
     // smarty
     'SMARTY_ON' => true,
