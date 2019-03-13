@@ -33,5 +33,12 @@ class SmartyView {
         self::$smarty->assign($var, $value);
     }
 
+    // smarty 模板缓存
+    protected function isCached ($tpl=null) {
+        if (!C('SMARTY_ON')) halt('请先开启smarty');
+        $tpl = $this->getTpl($tpl);
+        return self::$smarty->isCached($tpl, $_SERVER['REQUEST_URI']);
+    }
+
 }
 ?>

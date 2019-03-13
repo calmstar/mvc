@@ -3,3 +3,8 @@ Admin/*
 Temp/*
 
 /vendor/
+
+.htaccess
+.user.ini
+404.html
+

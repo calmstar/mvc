@@ -38,7 +38,10 @@ class IndexController extends Controller {
 
 //        p( K('User')->getAllData() );
 
-        $this->assign('var', 'fdfdfd');
+        // 模板缓存失效，才进行重新分配
+        if (!$this->isCached() ) {
+            $this->assign('var', time());
+        }
         $this->display();
 
     }

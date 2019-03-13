@@ -52,7 +52,7 @@ return array(
     'SMARTY_ON' => true,
     'LEFT_DELIMITER' => '{@',
     'RIGHT_DELIMITER' => '}',
-    'CACHE_ON' => false,
-    'CACHE_TIME' => 60,
+    'CACHE_ON' => true,
+    'CACHE_TIME' => 2,
 
 );
